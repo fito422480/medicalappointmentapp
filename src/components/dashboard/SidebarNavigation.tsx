@@ -5,8 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navigation = [
-  { name: "Inicio", href: "/" },
+  { name: "Inicio", href: "/dashboard" },
   { name: "Citas", href: "/appointments" },
+  { name: "Disponibilidad", href: "/availability" },
+  { name: "Notificaciones", href: "/notifications" },
   { name: "Pacientes", href: "/patients" },
   { name: "Ajustes", href: "/settings" },
 ];

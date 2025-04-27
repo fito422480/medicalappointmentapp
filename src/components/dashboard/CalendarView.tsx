@@ -9,7 +9,6 @@ interface Props {
   currentDate: Date;
   appointments: Appointment[];
   doctors: Doctor[];
-  currentView: string;
   loadingAppointments: boolean;
 }
 
@@ -17,7 +16,6 @@ const CalendarView: FC<Props> = ({
   currentDate,
   appointments,
   doctors,
-  currentView,
   loadingAppointments,
 }) => {
   if (loadingAppointments) {
