@@ -11,7 +11,6 @@ import {
   serverTimestamp,
   Timestamp,
   orderBy,
-  limit,
 } from "firebase/firestore";
 import { db } from "./firebase.config";
 import {
@@ -20,6 +19,18 @@ import {
   Patient,
   HolidayDate,
 } from "@/types/appointments";
+
+interface TimeSlot {
+  time: string;
+  enabled: boolean;
+}
+
+interface DoctorAvailability {
+  doctorId: string;
+  availability: TimeSlot[];
+  workingDays: number[];
+  defaultTimeSlots: TimeSlot[];
+}
 
 // ===== DOCTORS =====
 
@@ -204,7 +215,7 @@ export async function createAppointment(
     if (typeof date === "string") {
       // Convertir string a Date y luego a Timestamp
       const dateObj = new Date(date);
-      date = Timestamp.fromDate(dateObj);
+      date = Timestamp.fromDate(dateObj) as unknown as string;
     }
 
     const docRef = await addDoc(collection(db, "appointments"), {
@@ -231,7 +242,7 @@ export async function updateAppointment(
     if (data.date && typeof data.date === "string") {
       // Convertir string a Date y luego a Timestamp
       const dateObj = new Date(data.date);
-      data.date = Timestamp.fromDate(dateObj) as any;
+      data.date = Timestamp.fromDate(dateObj) as unknown as string;
     }
 
     const docRef = doc(db, "appointments", id);
@@ -351,13 +362,15 @@ export async function deleteHoliday(id: string): Promise<void> {
 // ===== DOCTOR AVAILABILITY =====
 
 // Obtener disponibilidad del doctor
-export async function getDoctorAvailability(doctorId: string) {
+export async function getDoctorAvailability(
+  doctorId: string
+): Promise<DoctorAvailability> {
   try {
     const docRef = doc(db, "doctorAvailability", doctorId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      return docSnap.data();
+      return docSnap.data() as DoctorAvailability;
     }
 
     // Retornar disponibilidad por defecto si no existe
@@ -366,28 +379,25 @@ export async function getDoctorAvailability(doctorId: string) {
       availability: [],
       workingDays: [1, 2, 3, 4, 5], // Lunes a viernes por defecto
       defaultTimeSlots: [
-        "08:00",
-        "08:30",
-        "09:00",
-        "09:30",
-        "10:00",
-        "10:30",
-        "11:00",
-        "11:30",
-        "12:00",
-        "12:30",
-        "13:00",
-        "13:30",
-        "14:00",
-        "14:30",
-        "15:00",
-        "15:30",
-        "16:00",
-        "16:30",
-        "17:00",
-        "17:30",
-        "18:00",
-      ].map((time) => ({ time, enabled: true })),
+        { time: "08:00", enabled: true },
+        { time: "08:30", enabled: true },
+        { time: "09:00", enabled: true },
+        { time: "09:30", enabled: true },
+        { time: "10:00", enabled: true },
+        { time: "10:30", enabled: true },
+        { time: "11:00", enabled: true },
+        { time: "11:30", enabled: true },
+        { time: "12:00", enabled: true },
+        { time: "12:30", enabled: true },
+        { time: "13:00", enabled: true },
+        { time: "13:30", enabled: true },
+        { time: "14:00", enabled: true },
+        { time: "14:30", enabled: true },
+        { time: "15:00", enabled: true },
+        { time: "15:30", enabled: true },
+        { time: "16:00", enabled: true },
+        { time: "16:30", enabled: true },
+      ],
     };
   } catch (error) {
     console.error("Error al obtener disponibilidad del doctor:", error);
@@ -398,7 +408,7 @@ export async function getDoctorAvailability(doctorId: string) {
 // Guardar disponibilidad del doctor
 export async function saveDoctorAvailability(
   doctorId: string,
-  availabilityData: any
+  availabilityData: Partial<DoctorAvailability>
 ): Promise<void> {
   try {
     const docRef = doc(db, "doctorAvailability", doctorId);

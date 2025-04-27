@@ -55,6 +55,7 @@ export const PatientSchema = z.object({
   allergies: z.array(z.string()).optional(),
   medicalConditions: z.array(z.string()).optional(),
   medications: z.array(z.string()).optional(),
+  allergies: z.array(z.string()).optional(),
   emergencyContact: z
     .object({
       name: z.string(),

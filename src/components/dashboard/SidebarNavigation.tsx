@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 const navigation = [
   { name: "Inicio", href: "/dashboard" },
   { name: "Citas", href: "/appointments" },
+  { name: "Historial Médico", href: "/medical-records" }, // Nuevo elemento
   { name: "Disponibilidad", href: "/availability" },
   { name: "Notificaciones", href: "/notifications" },
   { name: "Pacientes", href: "/patients" },

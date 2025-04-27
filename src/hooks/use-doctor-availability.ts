@@ -1,7 +1,7 @@
 // src/hooks/use-doctor-availability.ts
 import { useState, useEffect } from "react";
 import { db } from "@/lib/firebase/firebase.config";
-import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export interface DayAvailability {
   date: string;
