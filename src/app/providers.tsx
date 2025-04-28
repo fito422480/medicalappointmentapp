@@ -1,19 +1,19 @@
 'use client';
 
 import { ReactNode } from 'react';
-import AuthProvider from '@/hooks/use-auth';
+import { AuthProvider as _AuthProvider } from '@/hooks/use-auth';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/sonner';
 
 export default function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="light">
-      <AuthProvider>
+      <_AuthProvider>
         <>
           {children}
           <Toaster />
         </>
-      </AuthProvider>
+      </_AuthProvider>
     </ThemeProvider>
   );
 }

@@ -6,7 +6,7 @@ import {
   User as FirebaseUser,
 } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "./firebase.config";
+import { auth, db } from "@/lib/firebase/firebase.config";
 
 export type UserRole = "DOCTOR" | "PATIENT" | "ADMIN";
 

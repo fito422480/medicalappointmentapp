@@ -147,13 +147,19 @@ const DoctorCarousel = () => {
 };
 
 // Feature Card Component
-const FeatureCard = ({ icon: Icon, title, description, accentColor = "blue" }) => {
+interface FeatureCardProps {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  title: string;
+  description: string;
+  accentColor?: "blue" | "green" | "purple" | "amber" | "indigo";
+}
+
+const FeatureCard = ({ icon: Icon, title, description, accentColor = "blue" }: FeatureCardProps) => {
   const colorClasses = {
     blue: "from-blue-50 to-blue-100/30 text-blue-700 border-blue-100",
     green: "from-green-50 to-green-100/30 text-green-700 border-green-100",
     purple: "from-purple-50 to-purple-100/30 text-purple-700 border-purple-100",
     amber: "from-amber-50 to-amber-100/30 text-amber-700 border-amber-100",
-    pink: "from-pink-50 to-pink-100/30 text-pink-700 border-pink-100",
     indigo: "from-indigo-50 to-indigo-100/30 text-indigo-700 border-indigo-100"
   };
   
@@ -176,7 +182,14 @@ const FeatureCard = ({ icon: Icon, title, description, accentColor = "blue" }) =
 };
 
 // Testimonial Component
-const Testimonial = ({ name, role, content, avatar }) => {
+interface TestimonialProps {
+  name: string;
+  role: string;
+  content: string;
+  avatar?: string;
+}
+
+const Testimonial = ({ name, role, content, avatar }: TestimonialProps) => {
   return (
     <motion.div 
       variants={fadeInUp}
@@ -202,8 +215,15 @@ const Testimonial = ({ name, role, content, avatar }) => {
   );
 };
 
+// StatisticCard interface
+interface StatisticCardProps {
+  value: number | string;
+  label: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
+
 // Estadísticas Component
-const StatisticCard = ({ value, label, icon: Icon }) => {
+const StatisticCard = ({ value, label, icon: Icon }: StatisticCardProps) => {
   return (
     <motion.div 
       variants={fadeInUp}
@@ -219,7 +239,13 @@ const StatisticCard = ({ value, label, icon: Icon }) => {
 };
 
 // Especialidades Component
-const SpecialtyCard = ({ name, icon: Icon, description }) => {
+interface SpecialtyCardProps {
+  name: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  description: string;
+}
+
+const SpecialtyCard = ({ name, icon: Icon, description }: SpecialtyCardProps) => {
   return (
     <motion.div 
       variants={fadeInUp} 
@@ -389,7 +415,7 @@ const Footer = () => {
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
                 </svg>
@@ -828,7 +854,7 @@ const LandingPage = () => {
               icon={Activity}
               title="Reportes y Analíticas"
               description="Visualiza tendencias y obtén insights para mejorar la eficiencia y atención."
-              accentColor="pink"
+              accentColor="purple"
             />
           </motion.div>
         </div>
@@ -1006,7 +1032,7 @@ const LandingPage = () => {
 };
 
 // Componente PlayCircle
-const PlayCircle = ({ className, ...props }) => {
+const PlayCircle = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
@@ -1026,7 +1052,11 @@ const PlayCircle = ({ className, ...props }) => {
 };
 
 // Componente File
-const File = ({ className, ...props }) => {
+interface FileProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+}
+
+const File = ({ className, ...props }: FileProps) => {
   return (
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
